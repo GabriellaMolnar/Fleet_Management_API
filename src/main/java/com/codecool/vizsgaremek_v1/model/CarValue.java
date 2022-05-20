@@ -9,7 +9,7 @@ public class CarValue {
     private int carId;
     private LocalDate entryDate;
     private int grossValue;
-    private int netValue;
+ //   private int netValue; -- calculated??
     private LocalDate plannedEndOfLife;
     private int priceEndOfLife;
 }
