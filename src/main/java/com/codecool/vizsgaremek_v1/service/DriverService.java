@@ -12,7 +12,7 @@ public class DriverService {
 
     private DriverDao driverDao;
 
-    public DriverService( @Qualifier("driverMemDao") DriverDao driverDao) {
+    public DriverService(@Qualifier("driverMemDao") DriverDao driverDao) {
         this.driverDao = driverDao;
     }
 

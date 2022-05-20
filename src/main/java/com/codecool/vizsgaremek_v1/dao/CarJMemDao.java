@@ -51,17 +51,17 @@ public class CarJMemDao implements CarDao {
 
     @Override
     public List<Car> getCarByBrand(Brand brand) {
-        return cars.stream().filter(e-> e.getBrand().equals(brand)).collect(Collectors.toList());
+        return cars.stream().filter(e -> e.getBrand().equals(brand)).collect(Collectors.toList());
     }
 
     @Override
     public List<Car> getCommercialVehicles() {
-        return cars.stream().filter(e-> !e.isPassengerCar()).collect(Collectors.toList());
+        return cars.stream().filter(e -> !e.isPassengerCar()).collect(Collectors.toList());
     }
 
     @Override
     public List<Car> getPassengerCars() {
-        return cars.stream().filter(e-> e.isPassengerCar()).collect(Collectors.toList());
+        return cars.stream().filter(e -> e.isPassengerCar()).collect(Collectors.toList());
     }
 
     @Override

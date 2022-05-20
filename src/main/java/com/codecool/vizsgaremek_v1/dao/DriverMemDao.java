@@ -2,6 +2,7 @@ package com.codecool.vizsgaremek_v1.dao;
 
 import com.codecool.vizsgaremek_v1.model.Driver;
 import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +29,7 @@ public class DriverMemDao implements DriverDao {
 
     @Override
     public void updateDriver(Driver driver, long tribeNumber) {
-        Driver driverToMod =  getDriverByTribeNumber(tribeNumber);
+        Driver driverToMod = getDriverByTribeNumber(tribeNumber);
         driverToMod.setBirthDate(driver.getBirthDate());
         driverToMod.setMotherName(driver.getMotherName());
         driverToMod.setName(driver.getName());
@@ -41,6 +42,6 @@ public class DriverMemDao implements DriverDao {
 
     @Override
     public List<Driver> getDriverByName(String name) {
-        return drivers.stream().filter(e-> e.getName().equals(name)).collect(Collectors.toList());
+        return drivers.stream().filter(e -> e.getName().equals(name)).collect(Collectors.toList());
     }
 }
