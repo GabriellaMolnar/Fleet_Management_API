@@ -3,6 +3,7 @@ package com.codecool.vizsgaremek_v1.service;
 import com.codecool.vizsgaremek_v1.dao.CarDao;
 import com.codecool.vizsgaremek_v1.model.Brand;
 import com.codecool.vizsgaremek_v1.model.Car;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 public class CarService {
     private CarDao carDao;
 
-    public CarService(CarDao carDao) {
+    public CarService( @Qualifier("carMemDao") CarDao carDao) {
         this.carDao = carDao;
     }
 

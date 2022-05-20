@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Repository
+@Repository("carMemDao")
 public class CarJMemDao implements CarDao {
 
     private List<Car> cars = new ArrayList<>();
