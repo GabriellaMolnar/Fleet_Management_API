@@ -1,6 +1,7 @@
 package com.codecool.vizsgaremek_v1.service;
 
 import com.codecool.vizsgaremek_v1.dao.CarDao;
+import com.codecool.vizsgaremek_v1.model.Brand;
 import com.codecool.vizsgaremek_v1.model.Car;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +37,21 @@ public class CarService {
 
     public Car getCarByRegistrationNumber(String registrationNumber) {
         return carDao.getCarByRegistrationNumber(registrationNumber);
+    }
+
+    public List<Car> getCarByBrand(Brand brand) {
+        return carDao.getCarByBrand(brand);
+    }
+
+    public List<Car> getCommercialVehicles() {
+        return carDao.getCommercialVehicles();
+    }
+
+    public List<Car> getPassengerCars() {
+        return carDao.getPassengerCars();
+    }
+
+    public List<Car> getFreeCars() {
+        return carDao.getFreeCars();
     }
 }

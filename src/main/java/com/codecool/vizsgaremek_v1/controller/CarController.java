@@ -1,5 +1,6 @@
 package com.codecool.vizsgaremek_v1.controller;
 
+import com.codecool.vizsgaremek_v1.model.Brand;
 import com.codecool.vizsgaremek_v1.model.Car;
 import com.codecool.vizsgaremek_v1.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import java.util.List;
 @RequestMapping("/car")
 public class CarController {
 
-    private CarService carService;
+    private final CarService carService;
 
     @Autowired
     public CarController(CarService carService) {
@@ -43,8 +44,28 @@ public class CarController {
         carService.deleteCar(id);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{registration_number}")
     public Car getCarByRegistrationNumber(@PathVariable String registrationNumber) {
         return carService.getCarByRegistrationNumber(registrationNumber);
+    }
+
+    @GetMapping("/{brand}")
+    public List<Car> getCarByBrand(@PathVariable Brand brand) {
+        return carService.getCarByBrand(brand);
+    }
+
+    @GetMapping("/commercial_vehicles")
+    public List<Car> getCommercialVehicles() {
+        return carService.getCommercialVehicles();
+    }
+
+    @GetMapping("/passenger_cars")
+    public List<Car> getPassengerCars() {
+        return carService.getPassengerCars();
+    }
+
+    @GetMapping("/free")
+    public List<Car> getFreeCars() {
+        return carService.getFreeCars();
     }
 }
