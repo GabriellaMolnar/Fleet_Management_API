@@ -5,13 +5,15 @@ import com.codecool.vizsgaremek_v1.model.Driver;
 import java.util.List;
 
 public interface DriverDao {
-    void addDriver(Driver driver);
+    void addDriverWithTheTribeNumber(Driver driver);
 
     List<Driver> listDrivers();
 
-    Driver getDriver(long id);
+    Driver getDriverByTribeNumber(long tribeNumber);
 
-    void updateDriver(Driver driver, long id);
+    void updateDriver(Driver driver, long tribeNumber);
 
-    void deleteDriver(long id);
+    void deleteDriver(long tribeNumber);
+
+    List<Driver> getDriverByName(String name);
 }
