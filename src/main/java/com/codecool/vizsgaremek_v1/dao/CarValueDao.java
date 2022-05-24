@@ -1,7 +1,6 @@
 package com.codecool.vizsgaremek_v1.dao;
 
-import com.codecool.vizsgaremek_v1.model.Car;
-import com.codecool.vizsgaremek_v1.model.CarValue;
+import com.codecool.vizsgaremek_v1.entity.CarValue;
 
 import java.util.List;
 import java.util.Map;

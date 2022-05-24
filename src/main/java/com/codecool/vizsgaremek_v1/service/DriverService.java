@@ -1,7 +1,7 @@
 package com.codecool.vizsgaremek_v1.service;
 
 import com.codecool.vizsgaremek_v1.dao.DriverDao;
-import com.codecool.vizsgaremek_v1.model.Driver;
+import com.codecool.vizsgaremek_v1.entity.Driver;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 

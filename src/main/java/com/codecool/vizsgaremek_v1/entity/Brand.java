@@ -1,4 +1,4 @@
-package com.codecool.vizsgaremek_v1.model;
+package com.codecool.vizsgaremek_v1.entity;
 
 public enum Brand {
     TESLA, MAZDA, BMW, SUBARU, PORSCHE, HONDA, LEXUS, TOYOTA, CHRYSLER, BUICK, HYUNDAI,

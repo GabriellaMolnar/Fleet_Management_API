@@ -1,7 +1,7 @@
 package com.codecool.vizsgaremek_v1.controller;
 
-import com.codecool.vizsgaremek_v1.model.Brand;
-import com.codecool.vizsgaremek_v1.model.Car;
+import com.codecool.vizsgaremek_v1.entity.Brand;
+import com.codecool.vizsgaremek_v1.entity.Car;
 import com.codecool.vizsgaremek_v1.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -44,13 +44,13 @@ public class CarController {
         carService.deleteCar(id);
     }
 
-    @GetMapping("/{registration_number}")
-    public Car getCarByRegistrationNumber(@PathVariable String registrationNumber) {
+    @GetMapping(params = "registration_number")
+    public Car getCarByRegistrationNumber(@RequestParam("registration_number") String registrationNumber) {
         return carService.getCarByRegistrationNumber(registrationNumber);
     }
 
-    @GetMapping("/{brand}")
-    public List<Car> getCarByBrand(@PathVariable Brand brand) {
+    @GetMapping(params ="brand")
+    public List<Car> getCarByBrand(@RequestParam Brand brand) {
         return carService.getCarByBrand(brand);
     }
 

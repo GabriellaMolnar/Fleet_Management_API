@@ -1,6 +1,6 @@
 package com.codecool.vizsgaremek_v1.controller;
 
-import com.codecool.vizsgaremek_v1.model.Driver;
+import com.codecool.vizsgaremek_v1.entity.Driver;
 import com.codecool.vizsgaremek_v1.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 package com.codecool.vizsgaremek_v1.dao;
 
-import com.codecool.vizsgaremek_v1.model.Brand;
-import com.codecool.vizsgaremek_v1.model.Car;
+import com.codecool.vizsgaremek_v1.entity.Brand;
+import com.codecool.vizsgaremek_v1.entity.Car;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

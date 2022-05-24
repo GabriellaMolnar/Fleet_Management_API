@@ -1,6 +1,6 @@
 package com.codecool.vizsgaremek_v1.controller;
 
-import com.codecool.vizsgaremek_v1.model.CarValue;
+import com.codecool.vizsgaremek_v1.entity.CarValue;
 import com.codecool.vizsgaremek_v1.service.CarValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,58 +1,60 @@
 package com.codecool.vizsgaremek_v1.service;
 
-import com.codecool.vizsgaremek_v1.dao.CarDao;
-import com.codecool.vizsgaremek_v1.model.Brand;
-import com.codecool.vizsgaremek_v1.model.Car;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.codecool.vizsgaremek_v1.entity.Brand;
+import com.codecool.vizsgaremek_v1.entity.Car;
+import com.codecool.vizsgaremek_v1.repository.CarRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class CarService {
-    private CarDao carDao;
+    private CarRepository carRepository;
 
-    public CarService( @Qualifier("carMemDao") CarDao carDao) {
-        this.carDao = carDao;
+    public CarService(CarRepository carRepository) {
+        this.carRepository = carRepository;
     }
 
     public List<Car> listCars() {
-        return carDao.listCars();
+        return carRepository.findAll();
     }
 
     public void addCar(Car car) {
-        carDao.addCar(car);
+        carRepository.save(car);
     }
 
     public Car getCar(long id) {
-        return carDao.getCar(id);
+    return carRepository.findById(id).orElse(null);
     }
 
     public void updateCar(Car car, long id) {
-        carDao.updateCar(car, id);
+        //TODO
+        //  carRepository.updateCar(car, id);
     }
 
     public void deleteCar(long id) {
-        carDao.deleteCar(id);
+        carRepository.deleteById(id);
     }
 
     public Car getCarByRegistrationNumber(String registrationNumber) {
-        return carDao.getCarByRegistrationNumber(registrationNumber);
+        return carRepository.findAllCarByRegistrationNumber(registrationNumber);
     }
 
     public List<Car> getCarByBrand(Brand brand) {
-        return carDao.getCarByBrand(brand);
+        return carRepository.findAllCarByBrand(brand);
     }
 
     public List<Car> getCommercialVehicles() {
-        return carDao.getCommercialVehicles();
+         return carRepository.getCommercialVehicles();
     }
 
     public List<Car> getPassengerCars() {
-        return carDao.getPassengerCars();
+        return carRepository.findPassengerCars();
     }
 
     public List<Car> getFreeCars() {
-        return carDao.getFreeCars();
+        return null;
+        //TODO
+        // return carRepository.getFreeCars();
     }
 }

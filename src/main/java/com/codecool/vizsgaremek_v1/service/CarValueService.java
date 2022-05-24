@@ -1,7 +1,7 @@
 package com.codecool.vizsgaremek_v1.service;
 
 import com.codecool.vizsgaremek_v1.dao.CarValueDao;
-import com.codecool.vizsgaremek_v1.model.CarValue;
+import com.codecool.vizsgaremek_v1.entity.CarValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

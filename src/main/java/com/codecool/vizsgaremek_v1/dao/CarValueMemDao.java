@@ -1,6 +1,6 @@
 package com.codecool.vizsgaremek_v1.dao;
 
-import com.codecool.vizsgaremek_v1.model.CarValue;
+import com.codecool.vizsgaremek_v1.entity.CarValue;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
