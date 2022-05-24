@@ -3,9 +3,7 @@ package com.codecool.vizsgaremek_v1.entity;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
@@ -29,4 +27,9 @@ public class CarValue {
     @Length(max = 7)
     @Pattern(regexp = "[0-9]")
     private int priceEndOfLife;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "car_id")
+    private Car car;
 }

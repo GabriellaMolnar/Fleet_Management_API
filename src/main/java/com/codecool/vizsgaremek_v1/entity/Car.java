@@ -27,4 +27,8 @@ public class Car {
     @ManyToOne
     @JsonBackReference
     private Driver driver;
+
+    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private CarValue carValue;
 }
