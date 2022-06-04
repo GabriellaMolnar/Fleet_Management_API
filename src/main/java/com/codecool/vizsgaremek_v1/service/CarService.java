@@ -2,6 +2,7 @@ package com.codecool.vizsgaremek_v1.service;
 
 import com.codecool.vizsgaremek_v1.entity.Brand;
 import com.codecool.vizsgaremek_v1.entity.Car;
+import com.codecool.vizsgaremek_v1.entity.dto.CarAddUpdateDto;
 import com.codecool.vizsgaremek_v1.repository.CarRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,17 +20,32 @@ public class CarService {
         return carRepository.findAll();
     }
 
-    public void addCar(Car car) {
-        carRepository.save(car);
+    public Car addCar(CarAddUpdateDto carAddUpdateDto) {
+        Car newCar = new Car();
+        newCar.setBrand(carAddUpdateDto.getBrand());
+        newCar.setRegistrationNumber(carAddUpdateDto.getRegistrationNumber());
+        newCar.setModel(carAddUpdateDto.getModel());
+        newCar.setColor(carAddUpdateDto.getColor());
+        newCar.setEngineNumber(carAddUpdateDto.getEngineNumber());
+        newCar.setPassengerCar(carAddUpdateDto.isPassengerCar());
+       return carRepository.save(newCar);
     }
 
     public Car getCar(long id) {
     return carRepository.findById(id).orElse(null);
     }
 
-    public void updateCar(Car car, long id) {
-        //TODO
-        //  carRepository.updateCar(car, id);
+    public Car updateCar(CarAddUpdateDto carAddUpdateDto, long id) {
+        Car carToUpdate = carRepository.findById(id).orElse(null);
+        if (carToUpdate!=null){
+            carToUpdate.setRegistrationNumber(carAddUpdateDto.getRegistrationNumber());
+            carToUpdate.setBrand(carAddUpdateDto.getBrand());
+            carToUpdate.setModel(carAddUpdateDto.getModel());
+            carToUpdate.setColor(carAddUpdateDto.getColor());
+            carToUpdate.setEngineNumber(carAddUpdateDto.getEngineNumber());
+            carToUpdate.setPassengerCar(carAddUpdateDto.isPassengerCar());
+        }
+      return carRepository.save(carToUpdate);
     }
 
     public void deleteCar(long id) {
@@ -53,8 +69,6 @@ public class CarService {
     }
 
     public List<Car> getFreeCars() {
-        return null;
-        //TODO
-        // return carRepository.getFreeCars();
+       return carRepository.getFreeCars();
     }
 }
