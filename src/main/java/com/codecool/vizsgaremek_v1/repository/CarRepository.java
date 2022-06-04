@@ -11,7 +11,8 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     @Query("SELECT c FROM Car c WHERE c.registrationNumber = ?1 ")
     Car findAllCarByRegistrationNumber(String registrationNumber);
 
-    List<Car> findAllCarByBrand(Brand brand); //TODO
+    @Query("SELECT c FROM Car c WHERE c.brand = ?1 ")
+    List<Car> findAllCarByBrand(Brand brand);
 
     @Query("SELECT c FROM Car c WHERE c.passengerCar = true ")
     List<Car> findPassengerCars();
