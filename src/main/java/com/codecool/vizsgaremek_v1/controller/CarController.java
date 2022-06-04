@@ -2,6 +2,7 @@ package com.codecool.vizsgaremek_v1.controller;
 
 import com.codecool.vizsgaremek_v1.entity.Brand;
 import com.codecool.vizsgaremek_v1.entity.Car;
+import com.codecool.vizsgaremek_v1.entity.dto.CarAddUpdateDto;
 import com.codecool.vizsgaremek_v1.service.CarService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/car")
+@RequestMapping("/cars")
 @OpenAPIDefinition(info = @Info(title = "Fleet Management",
         description = "Manage drivers, cars and these values", version = "v1"))
 public class CarController {
@@ -34,8 +35,8 @@ public class CarController {
     @PostMapping
     @Operation(summary = "Add a car",
             description = "Add an new car to your car list")
-    public void addCar(@RequestBody Car car) {
-        carService.addCar(car);
+    public Car addCar(@RequestBody CarAddUpdateDto car) {
+        return carService.addCar(car);
     }
 
     @GetMapping("/{id}")
@@ -48,8 +49,8 @@ public class CarController {
     @PutMapping("/{id}")
     @Operation(summary = "Update an existing car",
             description = "Update an existing car by car id")
-    public void updateCar(@RequestBody Car car, @PathVariable long id) {
-        carService.updateCar(car, id);
+    public Car updateCar(@RequestBody CarAddUpdateDto car, @PathVariable long id) {
+       return carService.updateCar(car, id);
     }
 
     @DeleteMapping("/{id}")
