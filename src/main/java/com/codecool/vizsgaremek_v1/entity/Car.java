@@ -2,6 +2,7 @@ package com.codecool.vizsgaremek_v1.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,10 +13,13 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @NotBlank
+    @NotBlank(message = "registration number required")
     @Column(name = "registration_number")
     private String registrationNumber;
-   // @NotBlank
+
+   // @NotBlank(message = "Brand required")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "brand", length = 20)
     private Brand brand;
     private String model;
     private String color;
