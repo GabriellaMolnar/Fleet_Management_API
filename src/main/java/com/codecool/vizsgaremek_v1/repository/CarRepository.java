@@ -8,13 +8,18 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface CarRepository extends JpaRepository<Car, Long> {
+    @Query("SELECT c FROM Car c WHERE c.registrationNumber = ?1 ")
     Car findAllCarByRegistrationNumber(String registrationNumber);
 
-    List<Car> findAllCarByBrand(Brand brand);
+    List<Car> findAllCarByBrand(Brand brand); //TODO
 
-    @Query("SELECT a FROM Car a WHERE a.passengerCar = true ")
+    @Query("SELECT c FROM Car c WHERE c.passengerCar = true ")
     List<Car> findPassengerCars();
 
-    @Query("SELECT a FROM Car a WHERE a.passengerCar = false ")
+    @Query("SELECT c FROM Car c WHERE c.passengerCar = false ")
     List<Car> getCommercialVehicles();
+
+    @Query("SELECT c FROM Car c WHERE c.driver IS NULL ")
+    List<Car> getFreeCars();
+
 }
