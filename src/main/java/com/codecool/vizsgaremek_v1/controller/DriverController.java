@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/driver")
+@RequestMapping("/drivers")
 public class DriverController {
 
     private DriverService driverService;
@@ -29,36 +29,36 @@ public class DriverController {
     @PostMapping
     @Operation(summary = "Add a driver",
             description = "Add an new driver to your driver list")
-    public void addDriverWithTheTribeNumber(@RequestBody Driver driver) {
-        driverService.addDriverWithTheTribeNumber(driver);
+    public Driver addDriverWithTheTribeNumber(@RequestBody Driver driver) {
+        return driverService.addDriverWithTheTribeNumber(driver);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{tribe_number}")
     @Operation(summary = "Get a driver",
             description = "Get a driver by driver tribe number")
-    public Driver getDriverByTribeNumber(@PathVariable long tribeNumber) {
+    public Driver getDriverByTribeNumber(@PathVariable("tribe_number") long tribeNumber) {
         return driverService.getDriverByTribeNumber(tribeNumber);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{tribe_number}")
     @Operation(summary = "Update an existing driver",
             description = "Update an existing driver by driver tribe number")
-    public void updateDriver(@RequestBody Driver driver, @PathVariable long tribeNumber) {
-        driverService.updateDriver(driver, tribeNumber);
+    public Driver updateDriver(@RequestBody Driver driver, @PathVariable("tribe_number") long tribeNumber) {
+        return driverService.updateDriver(driver, tribeNumber);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{tribe_number}")
     @Operation(summary = "Delete a driver",
             description = "Delete a driver from your driver list")
-    public void deleteDriver(@PathVariable long tribeNumber) {
+    public void deleteDriver(@PathVariable("tribe_number") long tribeNumber) {
         driverService.deleteDriver(tribeNumber);
     }
 
 
-    @GetMapping("/{name}")
+    @GetMapping(params = "/name")
     @Operation(summary = "Get drivers by name",
             description = "Get drivers by name")
-    public List<Driver> getDriverByName(@PathVariable String name) {
+    public List<Driver> getDriverByName(@RequestParam String name) {
         return driverService.getDriverByName(name);
     }
 }

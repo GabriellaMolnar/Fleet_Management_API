@@ -2,6 +2,7 @@ package com.codecool.vizsgaremek_v1.service;
 
 import com.codecool.vizsgaremek_v1.dao.DriverDao;
 import com.codecool.vizsgaremek_v1.entity.Driver;
+import com.codecool.vizsgaremek_v1.repository.DriverRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -10,33 +11,37 @@ import java.util.List;
 @Service
 public class DriverService {
 
-    private DriverDao driverDao;
+    private DriverRepository driverRepository;
 
-    public DriverService(@Qualifier("driverMemDao") DriverDao driverDao) {
-        this.driverDao = driverDao;
+    public DriverService(DriverRepository driverRepository) {
+        this.driverRepository = driverRepository;
     }
 
-    public void addDriverWithTheTribeNumber(Driver driver) {
-        driverDao.addDriverWithTheTribeNumber(driver);
+    public Driver addDriverWithTheTribeNumber(Driver driver) {
+       return driverRepository.save(driver);
     }
 
     public List<Driver> listDrivers() {
-        return driverDao.listDrivers();
+        return driverRepository.findAll();
     }
 
     public Driver getDriverByTribeNumber(long tribeNumber) {
-        return driverDao.getDriverByTribeNumber(tribeNumber);
+        return driverRepository.getDriverByTribeNumber(tribeNumber);
     }
 
-    public void updateDriver(Driver driver, long tribeNumber) {
-        driverDao.updateDriver(driver, tribeNumber);
+    public Driver updateDriver(Driver driver, long tribeNumber) {
+        Driver updatedDriver = driverRepository.findById(tribeNumber).orElse(null);
+        updatedDriver.setBirthDate(driver.getBirthDate());
+        updatedDriver.setName(driver.getName());
+        updatedDriver.setMotherName(driver.getMotherName());
+        return driverRepository.save(updatedDriver);
     }
 
     public void deleteDriver(long tribeNumber) {
-        driverDao.deleteDriver(tribeNumber);
+        driverRepository.deleteById(tribeNumber);
     }
 
     public List<Driver> getDriverByName(String name) {
-        return driverDao.getDriverByName(name);
+        return driverRepository.getDriverByName(name);
     }
 }
