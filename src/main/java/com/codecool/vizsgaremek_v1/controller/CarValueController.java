@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/value")
+@RequestMapping("/values")
 public class CarValueController {
     private final CarValueService carValueService;
 

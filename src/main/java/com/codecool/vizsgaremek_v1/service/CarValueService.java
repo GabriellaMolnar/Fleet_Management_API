@@ -1,9 +1,7 @@
 package com.codecool.vizsgaremek_v1.service;
 
-import com.codecool.vizsgaremek_v1.dao.CarValueDao;
 import com.codecool.vizsgaremek_v1.entity.CarValue;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.codecool.vizsgaremek_v1.repository.CarValueRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,38 +9,48 @@ import java.util.Map;
 
 @Service
 public class CarValueService {
-    private CarValueDao carValueDao;
+    private CarValueRepository carValueRepository;
 
-    @Autowired
-    public CarValueService(@Qualifier("carValueMemDao") CarValueDao carValueDao) {
-        this.carValueDao = carValueDao;
+    public CarValueService(CarValueRepository carValueRepository) {
+        this.carValueRepository = carValueRepository;
     }
 
     public List<CarValue> getValuesList() {
-        return carValueDao.getValuesList();
+        return carValueRepository.findAll();
     }
 
     public CarValue getValuesOfCar(long carId) {
-        return carValueDao.getValuesOfCar(carId);
+        return carValueRepository.getById(carId);
     }
 
     public void addNewValuesToACar(CarValue carValue) {
-        carValueDao.addNewValuesToACar(carValue);
+        carValueRepository.save(carValue);
     }
 
     public void updateValuesOfACar(CarValue carValue, long carId) {
-        carValueDao.updateValuesOfACar(carValue, carId);
+        CarValue carValueToUpdate = carValueRepository.findById(carId).orElse(null);
+        if (carValueToUpdate!=null) {
+            carValueToUpdate.setEntryDate(carValue.getEntryDate());
+            carValueToUpdate.setGrossValue(carValue.getGrossValue());
+            carValueToUpdate.setPlannedEndOfLife(carValue.getPlannedEndOfLife());
+            carValueToUpdate.setPriceEndOfLife(carValue.getPriceEndOfLife());
+        }
+        carValueRepository.save(carValueToUpdate);
     }
 
     public void deleteValuesOfACar(long carId) {
-        carValueDao.deleteValuesOfACar(carId);
+        carValueRepository.deleteById(carId);
     }
 
     public Map<Long, Integer> listOfCarsNetValue() {
-        return carValueDao.listOfCarsNetValue();
+      //  return carValueRepository.listOfCarsNetValue();
+        //TODO
+        return null;
     }
 
     public Map<Long, Integer> listOfMonthlyDepreciation() {
-        return carValueDao.listOfMonthlyDepreciation();
+      //  return carValueRepository.listOfMonthlyDepreciation();
+        //TODO
+        return null;
     }
 }

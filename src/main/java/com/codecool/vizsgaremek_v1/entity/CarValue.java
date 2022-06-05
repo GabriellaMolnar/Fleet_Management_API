@@ -24,8 +24,8 @@ public class CarValue {
 
     private LocalDate plannedEndOfLife;
 
-    @Length(max = 7)
-    @Pattern(regexp = "[0-9]")
+    @Length(max = 8)
+   // @Pattern(regexp = "[0-9]")
     private int priceEndOfLife;
 
     @OneToOne
