@@ -38,6 +38,7 @@ public class Car {
     private Driver driver;
 
     @OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
+    @JsonIdentityReference(alwaysAsId = true)
     @PrimaryKeyJoinColumn
     private CarValue carValue;
 }
