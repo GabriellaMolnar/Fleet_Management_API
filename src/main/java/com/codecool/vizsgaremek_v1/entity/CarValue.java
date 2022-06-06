@@ -17,7 +17,7 @@ import java.time.LocalDate;
         property = "netValue")
 public class CarValue {
     @Id
-    @NotBlank
+   // @NotBlank
     @Column(name = "car_id")
     private long carId;
     @Column(name = "entry_date")
@@ -27,12 +27,13 @@ public class CarValue {
     private int netValue;
     private LocalDate plannedEndOfLife;
 
-    @Length(max = 8)
+   // @Length(max = 8)
     // @Pattern(regexp = "[0-9]")
     private int priceEndOfLife;
 
     @OneToOne
+    @MapsId
     @JsonIdentityReference(alwaysAsId = true)
-    @JoinColumn(name = "car_id", referencedColumnName = "id")
+  //  @JoinColumn(name = "car_id", referencedColumnName = "id")
     private Car car;
 }

@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Service
 public class CarValueService {
-    private CarValueRepository carValueRepository;
+    private final CarValueRepository carValueRepository;
 
     public CarValueService(CarValueRepository carValueRepository) {
         this.carValueRepository = carValueRepository;
