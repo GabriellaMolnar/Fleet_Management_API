@@ -60,17 +60,17 @@ public class CarController {
         carService.deleteCar(id);
     }
 
-    @GetMapping(params = "registration_number")
+    @GetMapping("/reg_num")
     @Operation(summary = "Get a car by registration number",
             description = "Get a car by its registration number")
     public Car getCarByRegistrationNumber(@RequestParam("registration_number") String registrationNumber) {
         return carService.getCarByRegistrationNumber(registrationNumber);
     }
 
-    @GetMapping(params = "brand")
+    @GetMapping("/brand")
     @Operation(summary = "Get cars by brand",
             description = "Get cars by brand")
-    public List<Car> getCarByBrand(@RequestParam Brand brand) {
+    public List<Car> getCarByBrand(@RequestParam("brand") Brand brand) {
         return carService.getCarByBrand(brand);
     }
 

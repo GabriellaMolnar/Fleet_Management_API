@@ -1,6 +1,7 @@
 package com.codecool.vizsgaremek_v1.controller;
 
 import com.codecool.vizsgaremek_v1.entity.Driver;
+import com.codecool.vizsgaremek_v1.entity.dto.DriverAddUpdateDto;
 import com.codecool.vizsgaremek_v1.service.DriverService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import java.util.List;
 @RequestMapping("/drivers")
 public class DriverController {
 
-    private DriverService driverService;
+    private final DriverService driverService;
 
     @Autowired
     public DriverController(DriverService driverService) {
@@ -29,7 +30,7 @@ public class DriverController {
     @PostMapping
     @Operation(summary = "Add a driver",
             description = "Add an new driver to your driver list")
-    public Driver addDriverWithTheTribeNumber(@RequestBody Driver driver) {
+    public Driver addDriverWithTheTribeNumber(@RequestBody DriverAddUpdateDto driver) {
         return driverService.addDriverWithTheTribeNumber(driver);
     }
 
@@ -43,7 +44,7 @@ public class DriverController {
     @PutMapping("/{tribe_number}")
     @Operation(summary = "Update an existing driver",
             description = "Update an existing driver by driver tribe number")
-    public Driver updateDriver(@RequestBody Driver driver, @PathVariable("tribe_number") long tribeNumber) {
+    public Driver updateDriver(@RequestBody DriverAddUpdateDto driver, @PathVariable("tribe_number") long tribeNumber) {
         return driverService.updateDriver(driver, tribeNumber);
     }
 
@@ -55,10 +56,10 @@ public class DriverController {
     }
 
 
-    @GetMapping(params = "/name")
+    @GetMapping("/name")
     @Operation(summary = "Get drivers by name",
             description = "Get drivers by name")
-    public List<Driver> getDriverByName(@RequestParam String name) {
+    public List<Driver> getDriverByName(@RequestParam("name") String name) {
         return driverService.getDriverByName(name);
     }
 }
