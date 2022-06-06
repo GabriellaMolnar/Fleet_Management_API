@@ -1,14 +1,18 @@
 package com.codecool.vizsgaremek_v1.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Data
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "registrationNumber")
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +33,8 @@ public class Car {
     boolean passengerCar;
 
     @ManyToOne
-    @JsonBackReference
+    @JoinColumn(name = "driver_tribeNumber", referencedColumnName = "tribeNumber")
+    @JsonIdentityReference(alwaysAsId = true)
     private Driver driver;
 
     @OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
