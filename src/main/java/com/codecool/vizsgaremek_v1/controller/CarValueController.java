@@ -54,6 +54,20 @@ public class CarValueController {
         carValueService.deleteValuesOfACar(carId);
     }
 
+    @GetMapping("/calc_monthly_depr")
+    @Operation(summary = "Calculate monthly depr",
+            description = "Calculate monthly depreciation")
+    public void calculateMonthlyDepreciation() {
+        carValueService.setMonthlyDepreciation();
+    }
+
+    @GetMapping("/calc_net_value")
+    @Operation(summary = "Calculate net value",
+            description = "Calculate net value of cars")
+    public void calculateNetValues() {
+        carValueService.setNetValues();
+    }
+
     @GetMapping("/net_value")
     @Operation(summary = "Get net values",
             description = "Get net values of existing cars")
