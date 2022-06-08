@@ -27,7 +27,7 @@ public class DepotController {
     @GetMapping("/{id}")
     @Operation(summary = "Get a depot",
             description = "Get a depot by id")
-    public Depot findById(@PathVariable Long id) {
+    public Depot findById(@PathVariable("id") long id) {
         return depotService.findById(id);
     }
 
@@ -41,7 +41,7 @@ public class DepotController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a depot",
             description = "Delete a depot from your depot list")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable long id) {
         depotService.deleteById(id);
     }
 }

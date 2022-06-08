@@ -19,7 +19,7 @@ public class DepotService {
         return depotRepository.findAll();
     }
 
-    public Depot findById(Long id) {
+    public Depot findById(long id) {
         return depotRepository.findById(id).orElse(null);
     }
 
@@ -30,8 +30,7 @@ public class DepotService {
         return depotRepository.save(newDepot);
     }
 
-
-    public void deleteById(Long id) {
+    public void deleteById(long id) {
         depotRepository.deleteById(id);
     }
 
