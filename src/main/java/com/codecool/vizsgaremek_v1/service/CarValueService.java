@@ -1,6 +1,9 @@
 package com.codecool.vizsgaremek_v1.service;
 
+import com.codecool.vizsgaremek_v1.entity.Car;
 import com.codecool.vizsgaremek_v1.entity.CarValue;
+import com.codecool.vizsgaremek_v1.entity.dto.CarValueAddUpdateDto;
+import com.codecool.vizsgaremek_v1.repository.CarRepository;
 import com.codecool.vizsgaremek_v1.repository.CarValueRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,21 +17,33 @@ import java.util.Map;
 @Service
 public class CarValueService {
     private final CarValueRepository carValueRepository;
+    private final CarRepository carRepository;
 
-    public CarValueService(CarValueRepository carValueRepository) {
+    public CarValueService(CarValueRepository carValueRepository, CarRepository carRepository) {
         this.carValueRepository = carValueRepository;
+        this.carRepository = carRepository;
     }
 
     public List<CarValue> getValuesList() {
-        return carValueRepository.findAll();
+        List<CarValue> carValueList = carValueRepository.findAll();
+        setNetValuesForAllCars(carValueList);
+        return carValueList;
     }
 
     public CarValue getValuesOfCar(long carId) {
-        return carValueRepository.getById(carId);
+        CarValue carValue = carValueRepository.getById(carId);
+        setNetValueById(carValue.getCarId());
+        return carValue;
     }
 
-    public void addNewValuesToACar(CarValue carValue) {
-        carValueRepository.save(carValue);
+    public void addNewValuesToACar(CarValueAddUpdateDto carValueAddUpdateDto) {
+        CarValue newCarValue = new CarValue();
+        newCarValue.setCarId(carValueAddUpdateDto.getCarId());
+        newCarValue.setEntryDate(carValueAddUpdateDto.getEntryDate());
+                newCarValue.setGrossValue(carValueAddUpdateDto.getGrossValue());
+                newCarValue.setPlannedEndOfLife(carValueAddUpdateDto.getPlannedEndOfLife());
+                newCarValue.setPriceEndOfLife(carValueAddUpdateDto.getPriceEndOfLife());
+        carValueRepository.save(newCarValue);
     }
 
     public void updateValuesOfACar(CarValue carValue, long carId) {
@@ -46,15 +61,13 @@ public class CarValueService {
         carValueRepository.deleteById(carId);
     }
 
-    public void setMonthlyDepreciation() {
-        List<CarValue> carValueList = carValueRepository.findAll();
+    private void setMonthlyDepreciationForAllCars(List<CarValue> carValueList) {
         for (CarValue carValue : carValueList) {
-            carValue.setMonthlyDepr(getMonthlyDepr(carValue.getCarId()));
-            updateValuesOfACar(carValue, carValue.getCarId());
+            setMonthlyDeprByCarId(carValue.getCarId());
         }
     }
 
-    private int getMonthlyDepr(long carId) {
+    private void setMonthlyDeprByCarId(long carId) {
         int monthlyDepr;
         CarValue thisCarValue = carValueRepository.getById(carId);
         LocalDate entryDate = thisCarValue.getEntryDate();
@@ -65,42 +78,49 @@ public class CarValueService {
         );
         int priceToDepr = thisCarValue.getGrossValue() - thisCarValue.getPriceEndOfLife();
         monthlyDepr = priceToDepr / monthsCount;
-        return monthlyDepr;
+        thisCarValue.setMonthlyDepr(monthlyDepr);
     }
 
-    public void setNetValues() {
-        List<CarValue> carValueList = carValueRepository.findAll();
+    public void setNetValuesForAllCars(List<CarValue> carValueList) {
         for (CarValue carValue : carValueList) {
-            carValue.setNetValue(getNetValue(carValue.getCarId()));
-            updateValuesOfACar(carValue, carValue.getCarId());
+            setNetValueById(carValue.getCarId());
         }
     }
 
-    private int getNetValue(long carId) {
-        int netValue = 0;
+    private void setNetValueById(long carId) {
+        int netValue;
         CarValue thisCarValue = carValueRepository.getById(carId);
         LocalDate entryDate = thisCarValue.getEntryDate();
         int numberOfMonthsPassed = (int) ChronoUnit.MONTHS.between(
                 YearMonth.from(entryDate),
                 YearMonth.from(YearMonth.now())
         );
-        int monthlyDepr = getMonthlyDepr(carId);
-        int totalDepr = monthlyDepr * numberOfMonthsPassed;
-
+        setMonthlyDeprByCarId(carId);
+        // int monthlyDepr = getMonthlyDepr(carId);
+        int totalDepr = thisCarValue.getMonthlyDepr() * numberOfMonthsPassed;
         netValue = thisCarValue.getGrossValue() - totalDepr;
-        return netValue;
+        thisCarValue.setNetValue(netValue);
     }
 
-    public Map<Long, Integer> listOfCarsNetValue() {
-        Map<Long, Integer> netValues = new HashMap<>();
-        //  return carValueRepository.listOfCarsNetValue();
-        //TODO
-        return null;
+    public Map<String, Integer> listOfCarsNetValue() {
+        Map<String, Integer> netValues = new HashMap<>();
+        List<CarValue> carValueList = carValueRepository.findAll();
+        setNetValuesForAllCars(carValueList);
+        for (CarValue carValue : carValueList) {
+            Car car = carRepository.findById(carValue.getCarId()).orElse(null);
+            netValues.put(car.getRegistrationNumber(), carValue.getNetValue());
+        }
+        return netValues;
     }
 
-    public Map<Long, Integer> listOfMonthlyDepreciation() {
-        //  return carValueRepository.listOfMonthlyDepreciation();
-        //TODO
-        return null;
+    public Map<String, Integer> listOfMonthlyDepreciation() {
+        Map<String, Integer> monthlyDepr = new HashMap<>();
+        List<CarValue> carValueList = carValueRepository.findAll();
+        setMonthlyDepreciationForAllCars(carValueList);
+        for (CarValue carValue : carValueList) {
+            Car car = carRepository.findById(carValue.getCarId()).orElse(null);
+            monthlyDepr.put(car.getRegistrationNumber(), carValue.getMonthlyDepr());
+        }
+        return monthlyDepr;
     }
 }
