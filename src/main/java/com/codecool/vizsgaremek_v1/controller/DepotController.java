@@ -6,6 +6,7 @@ import com.codecool.vizsgaremek_v1.service.DepotService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -34,7 +35,7 @@ public class DepotController {
     @PostMapping
     @Operation(summary = "Add a depot",
             description = "Add an new depot to your depot list")
-    public Depot save(@RequestBody DepotAddDto depot) {
+    public Depot save(@Valid @RequestBody DepotAddDto depot) {
         return depotService.save(depot);
     }
 

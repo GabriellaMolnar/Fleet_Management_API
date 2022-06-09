@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class DriverController {
     @PostMapping
     @Operation(summary = "Add a driver",
             description = "Add an new driver to your driver list")
-    public Driver addDriverWithTheTribeNumber(@RequestBody DriverAddUpdateDto driver) {
+    public Driver addDriverWithTheTribeNumber(@Valid @RequestBody DriverAddUpdateDto driver) {
         return driverService.addDriverWithTheTribeNumber(driver);
     }
 
@@ -44,7 +45,7 @@ public class DriverController {
     @PutMapping("/{tribe_number}")
     @Operation(summary = "Update an existing driver",
             description = "Update an existing driver by driver tribe number")
-    public Driver updateDriver(@RequestBody DriverAddUpdateDto driver, @PathVariable("tribe_number") long tribeNumber) {
+    public Driver updateDriver(@Valid @RequestBody DriverAddUpdateDto driver, @PathVariable("tribe_number") long tribeNumber) {
         return driverService.updateDriver(driver, tribeNumber);
     }
 

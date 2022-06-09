@@ -10,6 +10,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,19 +24,16 @@ import java.util.List;
 public class Driver {
 
     @Id
-   // @NotBlank
-   // @Length(min = 5, max = 6)
-   // @Pattern(regexp = "[0-9]")
     private long tribeNumber;
 
     @Length(min = 5, max = 50)
-  //  @Pattern(regexp = "[A-Z].+[^0-9]")
+    //  @Pattern(regexp = "[A-Z].+[^0-9]")
     private String name;
 
     private LocalDate birthDate;
 
     @Length(min = 5, max = 50)
-  //  @Pattern(regexp = "[A-Z].+[^0-9]")
+    //  @Pattern(regexp = "[A-Z].+[^0-9]")
     private String motherName;
 
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
