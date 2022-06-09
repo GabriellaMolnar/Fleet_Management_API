@@ -3,13 +3,17 @@ package com.codecool.vizsgaremek_v1.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "netValue")
@@ -22,7 +26,9 @@ public class CarValue {
     private int grossValue;
     private LocalDate plannedEndOfLife;
     private int priceEndOfLife;
+    @Transient
     private int netValue;
+    @Transient
     private int monthlyDepr;
 
     @OneToOne

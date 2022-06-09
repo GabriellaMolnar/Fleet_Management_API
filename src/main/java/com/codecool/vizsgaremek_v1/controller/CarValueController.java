@@ -1,11 +1,13 @@
 package com.codecool.vizsgaremek_v1.controller;
 
 import com.codecool.vizsgaremek_v1.entity.CarValue;
+import com.codecool.vizsgaremek_v1.entity.dto.CarValueAddUpdateDto;
 import com.codecool.vizsgaremek_v1.service.CarValueService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -36,14 +38,14 @@ public class CarValueController {
     @PostMapping
     @Operation(summary = "Add values",
             description = "Add values")
-    public void addNewValuesToACar(@RequestBody CarValue carValue) {
-        carValueService.addNewValuesToACar(carValue);
+    public void addNewValuesToACar(@Valid @RequestBody CarValueAddUpdateDto carValueAddUpdateDto) {
+        carValueService.addNewValuesToACar(carValueAddUpdateDto);
     }
 
     @PutMapping("/{car_id}")
     @Operation(summary = "Update value of a car",
             description = "Update values of an an existing car by car id")
-    public void updateValuesOfACar(@RequestBody CarValue carValue, @PathVariable("car_id") long carId) {
+    public void updateValuesOfACar(@Valid @RequestBody CarValue carValue, @PathVariable("car_id") long carId) {
         carValueService.updateValuesOfACar(carValue, carId);
     }
 
@@ -54,6 +56,7 @@ public class CarValueController {
         carValueService.deleteValuesOfACar(carId);
     }
 
+    /*
     @GetMapping("/calc_monthly_depr")
     @Operation(summary = "Calculate monthly depr",
             description = "Calculate monthly depreciation")
@@ -67,18 +70,19 @@ public class CarValueController {
     public void calculateNetValues() {
         carValueService.setNetValues();
     }
+     */
 
     @GetMapping("/net_value")
     @Operation(summary = "Get net values",
             description = "Get net values of existing cars")
-    public Map<Long, Integer> listOfCarsNetValue() {
+    public Map<String, Integer> listOfCarsNetValue() {
         return carValueService.listOfCarsNetValue();
     }
 
     @GetMapping("/depr")
-    @Operation(summary = "Get depreciation",
-            description = "Get depreciation and amortisation of cars")
-    public Map<Long, Integer> listOfMonthlyDepreciation() {
+    @Operation(summary = "Get monthly depreciation",
+            description = "Get monthly depreciation and amortisation of cars")
+    public Map<String, Integer> listOfMonthlyDepreciation() {
         return carValueService.listOfMonthlyDepreciation();
     }
 }
