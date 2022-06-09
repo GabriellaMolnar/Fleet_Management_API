@@ -10,12 +10,13 @@ import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/cars")
 @OpenAPIDefinition(info = @Info(title = "Fleet Management",
-        description = "Manage drivers, cars and these values", version = "v1"))
+        description = "Manage drivers, cars and these values, and depots", version = "v1"))
 public class CarController {
 
     private final CarService carService;
@@ -35,7 +36,7 @@ public class CarController {
     @PostMapping
     @Operation(summary = "Add a car",
             description = "Add an new car to your car list")
-    public Car addCar(@RequestBody CarAddUpdateDto car) {
+    public Car addCar(@Valid @RequestBody CarAddUpdateDto car) {
         return carService.addCar(car);
     }
 
@@ -49,7 +50,7 @@ public class CarController {
     @PutMapping("/{id}")
     @Operation(summary = "Update an existing car",
             description = "Update an existing car by car id")
-    public Car updateCar(@RequestBody CarAddUpdateDto car, @PathVariable long id) {
+    public Car updateCar(@Valid @RequestBody CarAddUpdateDto car, @PathVariable long id) {
        return carService.updateCar(car, id);
     }
 

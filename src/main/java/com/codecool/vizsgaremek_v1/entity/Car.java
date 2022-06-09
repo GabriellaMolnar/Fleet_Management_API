@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Data
 @Entity
@@ -17,11 +16,9 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @NotBlank(message = "registration number required")
     @Column(name = "registration_number")
     private String registrationNumber;
 
-   // @NotBlank(message = "Brand required")
     @Enumerated(EnumType.STRING)
     @Column(name = "brand", length = 20)
     private Brand brand;
