@@ -1,0 +1,2 @@
+create table car_value (car_id int8 not null, entry_date date, gross_value int4 not null, planned_end_of_life date, price_end_of_life int4 not null, primary key (car_id));
+alter table if exists car_value add constraint FKkb7opreo5nfapgl5wlorngkm7 foreign key (car_id) references car;
