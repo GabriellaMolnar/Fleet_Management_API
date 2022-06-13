@@ -31,7 +31,7 @@ public class CarValueService {
     }
 
     public CarValue getValuesOfCar(long carId) {
-        CarValue carValue = carValueRepository.getById(carId);
+        CarValue carValue = carValueRepository.findCarValueByCarId(carId);
         setNetValueById(carValue.getCarId());
         return carValue;
     }
@@ -40,9 +40,9 @@ public class CarValueService {
         CarValue newCarValue = new CarValue();
         newCarValue.setCarId(carValueAddUpdateDto.getCarId());
         newCarValue.setEntryDate(carValueAddUpdateDto.getEntryDate());
-                newCarValue.setGrossValue(carValueAddUpdateDto.getGrossValue());
-                newCarValue.setPlannedEndOfLife(carValueAddUpdateDto.getPlannedEndOfLife());
-                newCarValue.setPriceEndOfLife(carValueAddUpdateDto.getPriceEndOfLife());
+        newCarValue.setGrossValue(carValueAddUpdateDto.getGrossValue());
+        newCarValue.setPlannedEndOfLife(carValueAddUpdateDto.getPlannedEndOfLife());
+        newCarValue.setPriceEndOfLife(carValueAddUpdateDto.getPriceEndOfLife());
         carValueRepository.save(newCarValue);
     }
 
