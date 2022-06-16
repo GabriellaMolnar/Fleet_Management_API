@@ -1,7 +1,5 @@
 package com.codecool.vizsgaremek_v1;
 
-import com.codecool.vizsgaremek_v1.entity.Brand;
-import com.codecool.vizsgaremek_v1.entity.Car;
 import com.codecool.vizsgaremek_v1.entity.Driver;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class DriverUnitTest {
@@ -25,18 +22,18 @@ public class DriverUnitTest {
 
     @Test
     public void findAllDriverTest() {
-        final ResponseEntity<Driver[]> response = restTemplate.getForEntity(url, Driver[].class);
+        final ResponseEntity<DriverTestDto[]> response = restTemplate.getForEntity(url, DriverTestDto[].class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        final Driver[] drivers = response.getBody();
+        final DriverTestDto[] drivers = response.getBody();
         assert drivers != null;
         assertEquals(2, drivers.length);
     }
 
     @Test
     public void getADriverTest() {
-        final ResponseEntity<Driver> response = restTemplate.getForEntity(url + "/" + 222222, Driver.class);
+        final ResponseEntity<DriverTestDto> response = restTemplate.getForEntity(url + "/" + 222222, DriverTestDto.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        final Driver receivedDriver = response.getBody();
+        final DriverTestDto receivedDriver = response.getBody();
         assert receivedDriver != null;
         assertEquals(222222, receivedDriver.getTribeNumber());
         assertEquals("Kovács István", receivedDriver.getName());
