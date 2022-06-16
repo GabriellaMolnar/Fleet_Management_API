@@ -7,7 +7,11 @@ import com.codecool.vizsgaremek_v1.service.CarService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,6 +30,8 @@ public class CarController {
         this.carService = carService;
     }
 
+    Logger logger = LoggerFactory.getLogger(DriverController.class);
+
     @GetMapping
     @Operation(summary = "Get cars",
             description = "Get list of cars")
@@ -36,8 +42,13 @@ public class CarController {
     @PostMapping
     @Operation(summary = "Add a car",
             description = "Add an new car to your car list")
-    public Car addCar(@Valid @RequestBody CarAddUpdateDto car) {
-        return carService.addCar(car);
+    public ResponseEntity<Car> addCar(@Valid @RequestBody CarAddUpdateDto carDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            logger.error("invalid car");
+            bindingResult.getAllErrors().forEach(e -> logger.error(e.getDefaultMessage()));
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(carService.addCar(carDto));
     }
 
     @GetMapping("/{id}")
@@ -50,8 +61,14 @@ public class CarController {
     @PutMapping("/{id}")
     @Operation(summary = "Update an existing car",
             description = "Update an existing car by car id")
-    public Car updateCar(@Valid @RequestBody CarAddUpdateDto car, @PathVariable long id) {
-       return carService.updateCar(car, id);
+    public ResponseEntity<Car> updateCar(@Valid @RequestBody CarAddUpdateDto car, @PathVariable long id,
+                                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            logger.error("invalid car");
+            bindingResult.getAllErrors().forEach(e -> logger.error(e.getDefaultMessage()));
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(carService.updateCar(car, id));
     }
 
     @DeleteMapping("/{id}")

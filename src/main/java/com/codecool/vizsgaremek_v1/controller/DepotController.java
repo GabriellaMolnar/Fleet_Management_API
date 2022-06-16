@@ -4,6 +4,8 @@ import com.codecool.vizsgaremek_v1.entity.Depot;
 import com.codecool.vizsgaremek_v1.entity.dto.DepotAddDto;
 import com.codecool.vizsgaremek_v1.service.DepotService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,8 +37,11 @@ public class DepotController {
     @PostMapping
     @Operation(summary = "Add a depot",
             description = "Add an new depot to your depot list")
-    public Depot save(@Valid @RequestBody DepotAddDto depot) {
-        return depotService.save(depot);
+    public ResponseEntity<Depot> save(@Valid @RequestBody DepotAddDto depot, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(depotService.save(depot));
     }
 
     @DeleteMapping("/{id}")

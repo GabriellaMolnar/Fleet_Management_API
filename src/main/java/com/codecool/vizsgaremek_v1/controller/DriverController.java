@@ -4,7 +4,11 @@ import com.codecool.vizsgaremek_v1.entity.Driver;
 import com.codecool.vizsgaremek_v1.entity.dto.DriverAddUpdateDto;
 import com.codecool.vizsgaremek_v1.service.DriverService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,6 +25,8 @@ public class DriverController {
         this.driverService = driverService;
     }
 
+    Logger logger = LoggerFactory.getLogger(DriverController.class);
+
     @GetMapping
     @Operation(summary = "Get drivers",
             description = "Get list of drivers")
@@ -31,8 +37,14 @@ public class DriverController {
     @PostMapping
     @Operation(summary = "Add a driver",
             description = "Add an new driver to your driver list")
-    public Driver addDriverWithTheTribeNumber(@Valid @RequestBody DriverAddUpdateDto driver) {
-        return driverService.addDriverWithTheTribeNumber(driver);
+    public ResponseEntity<Driver> addDriverWithTheTribeNumber(@Valid @RequestBody DriverAddUpdateDto driverDto,
+                                                              BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            logger.error("invalid driver");
+            bindingResult.getAllErrors().forEach(e -> logger.error(e.getDefaultMessage()));
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(driverService.addDriverWithTheTribeNumber(driverDto));
     }
 
     @GetMapping("/{tribe_number}")
@@ -45,8 +57,14 @@ public class DriverController {
     @PutMapping("/{tribe_number}")
     @Operation(summary = "Update an existing driver",
             description = "Update an existing driver by driver tribe number")
-    public Driver updateDriver(@Valid @RequestBody DriverAddUpdateDto driver, @PathVariable("tribe_number") long tribeNumber) {
-        return driverService.updateDriver(driver, tribeNumber);
+    public ResponseEntity<Driver> updateDriver(@Valid @RequestBody DriverAddUpdateDto driver, @PathVariable("tribe_number") long tribeNumber,
+                                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            logger.error("invalid driver");
+            bindingResult.getAllErrors().forEach(e -> logger.error(e.getDefaultMessage()));
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(driverService.updateDriver(driver, tribeNumber));
     }
 
     @DeleteMapping("/{tribe_number}")

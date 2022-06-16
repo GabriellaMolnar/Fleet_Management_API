@@ -1,10 +1,13 @@
 package com.codecool.vizsgaremek_v1.controller;
 
+import com.codecool.vizsgaremek_v1.entity.Car;
 import com.codecool.vizsgaremek_v1.entity.CarValue;
 import com.codecool.vizsgaremek_v1.entity.dto.CarValueAddUpdateDto;
 import com.codecool.vizsgaremek_v1.service.CarValueService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -38,15 +41,23 @@ public class CarValueController {
     @PostMapping
     @Operation(summary = "Add values",
             description = "Add values")
-    public void addNewValuesToACar(@Valid @RequestBody CarValueAddUpdateDto carValueAddUpdateDto) {
-        carValueService.addNewValuesToACar(carValueAddUpdateDto);
+    public ResponseEntity<CarValue> addNewValuesToACar(@Valid @RequestBody CarValueAddUpdateDto carValueAddUpdateDto,
+                                                       BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(carValueService.addNewValuesToACar(carValueAddUpdateDto));
     }
 
     @PutMapping("/{car_id}")
     @Operation(summary = "Update value of a car",
             description = "Update values of an an existing car by car id")
-    public void updateValuesOfACar(@Valid @RequestBody CarValue carValue, @PathVariable("car_id") long carId) {
-        carValueService.updateValuesOfACar(carValue, carId);
+    public ResponseEntity<CarValue> updateValuesOfACar(@Valid @RequestBody CarValue carValue, @PathVariable("car_id") long carId,
+                                   BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(carValueService.updateValuesOfACar(carValue, carId));
     }
 
     @DeleteMapping("/{car_id}")
@@ -55,22 +66,6 @@ public class CarValueController {
     public void deleteValuesOfACar(@PathVariable("car_id") long carId) {
         carValueService.deleteValuesOfACar(carId);
     }
-
-    /*
-    @GetMapping("/calc_monthly_depr")
-    @Operation(summary = "Calculate monthly depr",
-            description = "Calculate monthly depreciation")
-    public void calculateMonthlyDepreciation() {
-        carValueService.setMonthlyDepreciation();
-    }
-
-    @GetMapping("/calc_net_value")
-    @Operation(summary = "Calculate net value",
-            description = "Calculate net value of cars")
-    public void calculateNetValues() {
-        carValueService.setNetValues();
-    }
-     */
 
     @GetMapping("/net_value")
     @Operation(summary = "Get net values",
