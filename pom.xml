@@ -84,18 +84,6 @@
                     </excludes>
                 </configuration>
             </plugin>
-
-      <!--      <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>8.5.11</version>
-                <configuration>
-                    <url>jdbc:postgresql://localhost:5432/fleet</url>
-                    <user>fleetmanager</user>
-                    <password>fleetmanager</password>
-                </configuration>
-            </plugin>-->
         </plugins>
     </build>
-
 </project>
