@@ -25,15 +25,8 @@ public class Driver {
 
     @Id
     private long tribeNumber;
-
-    @Length(min = 5, max = 50)
-    //  @Pattern(regexp = "[A-Z].+[^0-9]")
     private String name;
-
     private LocalDate birthDate;
-
-    @Length(min = 5, max = 50)
-    //  @Pattern(regexp = "[A-Z].+[^0-9]")
     private String motherName;
 
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
