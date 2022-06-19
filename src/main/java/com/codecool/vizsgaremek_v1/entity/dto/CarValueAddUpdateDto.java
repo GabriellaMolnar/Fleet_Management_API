@@ -15,6 +15,7 @@ public class CarValueAddUpdateDto {
     private LocalDate entryDate;
     @Range(min = 0, max = 100000000)
     private int grossValue;
+    @NotNull
     private LocalDate plannedEndOfLife;
     @Range(min = 0, max = 20000000)
     private int priceEndOfLife;
