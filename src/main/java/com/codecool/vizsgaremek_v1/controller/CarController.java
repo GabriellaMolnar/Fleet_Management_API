@@ -42,13 +42,11 @@ public class CarController {
     @PostMapping
     @Operation(summary = "Add a car",
             description = "Add an new car to your car list")
-    public ResponseEntity<Car> addCar(@Valid @RequestBody CarAddUpdateDto carDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            logger.error("invalid car");
-            bindingResult.getAllErrors().forEach(e -> logger.error(e.getDefaultMessage()));
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(carService.addCar(carDto));
+    public ResponseEntity<?> addCar(@Valid @RequestBody CarAddUpdateDto carDto, BindingResult bindingResult) {
+        ResponseEntity<?> error_message = getResponseEntity(bindingResult);
+        if (error_message != null) return error_message;
+        logger.info("added new car");
+        return ResponseEntity.ok().body(carService.addCar(carDto));
     }
 
     @GetMapping("/{id}")
@@ -61,21 +59,32 @@ public class CarController {
     @PutMapping("/{id}")
     @Operation(summary = "Update an existing car",
             description = "Update an existing car by car id")
-    public ResponseEntity<Car> updateCar(@Valid @RequestBody CarAddUpdateDto car, @PathVariable long id,
-                                         BindingResult bindingResult) {
+    public ResponseEntity<?> updateCar(@Valid @RequestBody CarAddUpdateDto car, @PathVariable long id,
+                                       BindingResult bindingResult) {
+        ResponseEntity<?> error_message = getResponseEntity(bindingResult);
+        if (error_message != null) return error_message;
+        logger.info("successful update");
+        return ResponseEntity.ok().body(carService.updateCar(car, id));
+    }
+
+    private ResponseEntity<?> getResponseEntity(BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            logger.error("invalid car");
-            bindingResult.getAllErrors().forEach(e -> logger.error(e.getDefaultMessage()));
-            return ResponseEntity.badRequest().build();
+            StringBuilder error_message = new StringBuilder();
+            error_message.append("invalid car\n");
+            bindingResult.getAllErrors().forEach(e -> error_message.append(e.getDefaultMessage()));
+            logger.error(String.valueOf(error_message));
+            return ResponseEntity.badRequest().body(error_message);
         }
-        return ResponseEntity.ok(carService.updateCar(car, id));
+        return null;
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a car",
             description = "Delete a car from your car list")
     public void deleteCar(@PathVariable long id) {
+        Car carToDelete = carService.getCar(id);
         carService.deleteCar(id);
+        logger.info("successful deleting " + carToDelete);
     }
 
     @GetMapping("/reg_num")

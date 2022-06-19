@@ -37,11 +37,11 @@ public class DepotController {
     @PostMapping
     @Operation(summary = "Add a depot",
             description = "Add an new depot to your depot list")
-    public ResponseEntity<Depot> save(@Valid @RequestBody DepotAddDto depot, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<?> save(@Valid @RequestBody DepotAddDto depot, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body("invalid depot");
         }
-        return ResponseEntity.ok(depotService.save(depot));
+        return ResponseEntity.ok().body(depotService.save(depot));
     }
 
     @DeleteMapping("/{id}")

@@ -37,14 +37,14 @@ public class DriverController {
     @PostMapping
     @Operation(summary = "Add a driver",
             description = "Add an new driver to your driver list")
-    public ResponseEntity<Driver> addDriverWithTheTribeNumber(@Valid @RequestBody DriverAddUpdateDto driverDto,
-                                                              BindingResult bindingResult) {
+    public ResponseEntity<?> addDriverWithTheTribeNumber(@Valid @RequestBody DriverAddUpdateDto driverDto,
+                                                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             logger.error("invalid driver");
             bindingResult.getAllErrors().forEach(e -> logger.error(e.getDefaultMessage()));
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("invalid driver");
         }
-        return ResponseEntity.ok(driverService.addDriverWithTheTribeNumber(driverDto));
+        return ResponseEntity.ok().body(driverService.addDriverWithTheTribeNumber(driverDto));
     }
 
     @GetMapping("/{tribe_number}")
@@ -57,14 +57,14 @@ public class DriverController {
     @PutMapping("/{tribe_number}")
     @Operation(summary = "Update an existing driver",
             description = "Update an existing driver by driver tribe number")
-    public ResponseEntity<Driver> updateDriver(@Valid @RequestBody DriverAddUpdateDto driver, @PathVariable("tribe_number") long tribeNumber,
-                                               BindingResult bindingResult) {
+    public ResponseEntity<?> updateDriver(@Valid @RequestBody DriverAddUpdateDto driver, @PathVariable("tribe_number") long tribeNumber,
+                                          BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             logger.error("invalid driver");
             bindingResult.getAllErrors().forEach(e -> logger.error(e.getDefaultMessage()));
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("invalid driver");
         }
-        return ResponseEntity.ok(driverService.updateDriver(driver, tribeNumber));
+        return ResponseEntity.ok().body(driverService.updateDriver(driver, tribeNumber));
     }
 
     @DeleteMapping("/{tribe_number}")

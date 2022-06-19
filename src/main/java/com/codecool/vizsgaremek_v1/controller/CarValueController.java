@@ -1,6 +1,5 @@
 package com.codecool.vizsgaremek_v1.controller;
 
-import com.codecool.vizsgaremek_v1.entity.Car;
 import com.codecool.vizsgaremek_v1.entity.CarValue;
 import com.codecool.vizsgaremek_v1.entity.dto.CarValueAddUpdateDto;
 import com.codecool.vizsgaremek_v1.service.CarValueService;
@@ -41,23 +40,23 @@ public class CarValueController {
     @PostMapping
     @Operation(summary = "Add values",
             description = "Add values")
-    public ResponseEntity<CarValue> addNewValuesToACar(@Valid @RequestBody CarValueAddUpdateDto carValueAddUpdateDto,
-                                                       BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<?> addNewValuesToACar(@Valid @RequestBody CarValueAddUpdateDto carValueAddUpdateDto,
+                                                BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body("invalid car value");
         }
-        return ResponseEntity.ok(carValueService.addNewValuesToACar(carValueAddUpdateDto));
+        return ResponseEntity.ok().body(carValueService.addNewValuesToACar(carValueAddUpdateDto));
     }
 
     @PutMapping("/{car_id}")
     @Operation(summary = "Update value of a car",
             description = "Update values of an an existing car by car id")
-    public ResponseEntity<CarValue> updateValuesOfACar(@Valid @RequestBody CarValue carValue, @PathVariable("car_id") long carId,
-                                   BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<?> updateValuesOfACar(@Valid @RequestBody CarValue carValue, @PathVariable("car_id") long carId,
+                                                BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body("invalid car value");
         }
-        return ResponseEntity.ok(carValueService.updateValuesOfACar(carValue, carId));
+        return ResponseEntity.ok().body(carValueService.updateValuesOfACar(carValue, carId));
     }
 
     @DeleteMapping("/{car_id}")
