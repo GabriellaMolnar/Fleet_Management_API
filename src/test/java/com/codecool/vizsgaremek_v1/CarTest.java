@@ -1,7 +1,6 @@
 package com.codecool.vizsgaremek_v1;
 
 import com.codecool.vizsgaremek_v1.entity.Brand;
-import com.codecool.vizsgaremek_v1.entity.Car;
 import com.codecool.vizsgaremek_v1.entity.dto.CarAddUpdateDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,33 +12,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class CarUnitTest {
+public class CarTest {
     @Autowired
     private TestRestTemplate restTemplate;
-
-    private static CarAddUpdateDto[] CARS_CAN_BE_ADD;
     private final String url = "http://localhost:8080/cars";
 
-    @Test
-    public void CarListTest() {
-        final ResponseEntity<CarTestDto[]> response = restTemplate.getForEntity(url, CarTestDto[].class);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        final CarTestDto[] cars = response.getBody();
-        assert cars != null;
-        assertEquals(4, cars.length);
-    }
-/*  nem jó //TODO
-    void addOrUpdate() {
-        CARS_CAN_BE_ADD = new CarAddUpdateDto[]{
-                new CarAddUpdateDto("RIT-789", Brand.ALFA_ROMEO, "Civic", "pink", "ggggggggggggg", true),
-                new CarAddUpdateDto("GEG-111", Brand.JAGUAR, "4444", "brown", "vvvvvvvvv", true)
-        };
-    }
 
-    void postCar(String url, CarAddUpdateDto car) {
-        addOrUpdate();
-        final HttpEntity<CarAddUpdateDto> httpEntity = createHttpEntityWithMediatypeJson(car);
-        final ResponseEntity<Long> postResponse = restTemplate.postForEntity(url, httpEntity, Long.class);
+    private void postCar(CarAddUpdateDto newCar) {
+        final HttpEntity<CarAddUpdateDto> httpEntity = createHttpEntityWithMediatypeJson(newCar);
+        ResponseEntity<CarAddUpdateDto> postResponse = restTemplate.postForEntity(url, httpEntity, CarAddUpdateDto.class);
         assertEquals(HttpStatus.OK, postResponse.getStatusCode());
     }
 
@@ -50,19 +31,35 @@ public class CarUnitTest {
     }
 
     @Test
-    void givenNewCarPostedWhenCarRetrievedThenReturnsContent() {
-        final Car[] result = restTemplate.getForObject(url, Car[].class);
-        assertEquals(4, result.length);
-
-        postCar(url, CARS_CAN_BE_ADD[0]);
-
-        final ResponseEntity<Car[]> response = restTemplate.getForEntity(url, Car[].class);
+    public void CarListAddAndDeleteACarTest() {
+        final ResponseEntity<CarTestDto[]> response = restTemplate.getForEntity(url, CarTestDto[].class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        final Car[] car = response.getBody();
-       assertEquals(5, car.length);
-      assertEquals(CARS_CAN_BE_ADD[0].getBrand(), car[4].getBrand() );
+        final CarTestDto[] cars = response.getBody();
+        assert cars != null;
+        assertEquals(4, cars.length);
+
+        CarAddUpdateDto newCar = new CarAddUpdateDto("RIT-789", Brand.ALFA_ROMEO, "Civic", "pink", "ggggggggggggg", true);
+        postCar(newCar);
+        final ResponseEntity<CarTestDto[]> postResponse = restTemplate.getForEntity(url, CarTestDto[].class);
+        assertEquals(HttpStatus.OK, postResponse.getStatusCode());
+        assertEquals(5, postResponse.getBody().length);
+
+        restTemplate.delete(url + "/" + 5, CarTestDto.class);
+        final ResponseEntity<CarTestDto[]> responseAfterDelete = restTemplate.getForEntity(url, CarTestDto[].class);
+        final CarTestDto[] cars3 = responseAfterDelete.getBody();
+        assertEquals(HttpStatus.OK, responseAfterDelete.getStatusCode());
+        assertEquals(4, cars3.length);
     }
- */
+
+
+    @Test
+    public void addNotValidCarTest() {
+        CarAddUpdateDto badCar = new CarAddUpdateDto("GE", Brand.JAGUAR, "4444", "brown", "vvvvvvvvv", true);
+        final HttpEntity<CarAddUpdateDto> httpEntity = createHttpEntityWithMediatypeJson(badCar);
+        ResponseEntity<String> postResponse = restTemplate.postForEntity(url, httpEntity, String.class);
+        assertEquals("400 BAD_REQUEST", postResponse.getStatusCode().toString());
+    }
+
     @Test
     public void getACarTest() {
         final ResponseEntity<CarTestDto> response = restTemplate.getForEntity(url + "/" + 3, CarTestDto.class);
@@ -87,6 +84,16 @@ public class CarUnitTest {
         final CarTestDto receivedCar = response.getBody();
         assert receivedCar != null;
         assertEquals(2, receivedCar.getId());
+    }
+
+    @Test
+    public void getVehiclesByBrandTest() {
+        final ResponseEntity<CarTestDto[]> response = restTemplate.getForEntity(url + "/brand?brand=HONDA", CarTestDto[].class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        final CarTestDto[] cars = response.getBody();
+        assert cars != null;
+        assertEquals(1, cars.length);
+        assertEquals("ABC-345", cars[0].getRegistrationNumber());
     }
 
     @Test
