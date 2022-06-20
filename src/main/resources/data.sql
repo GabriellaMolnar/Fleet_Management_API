@@ -1,7 +1,7 @@
 INSERT INTO Driver (tribe_number, name, birth_date, mother_name) VALUES (111111, 'Kis Jenő', DATE '2000-12-17', 'Nagy Piroska');
 INSERT INTO Driver (tribe_number, name, birth_date, mother_name) VALUES (222222, 'Kovács István', DATE '1980-03-25' ,'Lapos Julianna');
 
-INSERT INTO Depot (address, depot_name) VALUES ('Kiskunfélegyháza Fő utca 2.', 'Our main depot');
+INSERT INTO Depot (address, depot_name) VALUES ('Kiskunfélegyháza Fő utca 2. ', 'Our main depot');
 
 INSERT INTO  Car (registration_number, brand, model, color, engine_number, passenger_car, driver_tribe_number, depot_id) VALUES ( 'ABC-345', 'HONDA', 'Civic', 'blue', 'asdfghj', true, 111111, 1);
 INSERT INTO  Car (registration_number, brand, model, color, engine_number, passenger_car, driver_tribe_number, depot_id) VALUES ( 'PUS-111', 'VOLKSWAGEN', 'Passat', 'white', 'thisisenginenumber', true, 111111, 1);
