@@ -49,11 +49,11 @@ public class CarController {
         return ResponseEntity.ok().body(carService.addCar(carDto));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{car_id}")
     @Operation(summary = "Get a car",
             description = "Get a car by car id")
-    public Car getCar(@PathVariable long id) {
-        return carService.getCar(id);
+    public Car getCar(@PathVariable ("car_id") long carId) {
+        return carService.getCar(carId);
     }
 
     @PutMapping("/{id}")

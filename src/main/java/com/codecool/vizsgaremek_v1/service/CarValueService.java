@@ -36,17 +36,17 @@ public class CarValueService {
         return carValue;
     }
 
-    public void addNewValuesToACar(CarValueAddUpdateDto carValueAddUpdateDto) {
-        CarValue newCarValue = new CarValue();
-        newCarValue.setCarId(carValueAddUpdateDto.getCarId());
+    public CarValue addNewValuesToACar(CarValueAddUpdateDto carValueAddUpdateDto) {
+        long carId = carValueAddUpdateDto.getCarId();
+        CarValue newCarValue = new CarValue(carId);
         newCarValue.setEntryDate(carValueAddUpdateDto.getEntryDate());
         newCarValue.setGrossValue(carValueAddUpdateDto.getGrossValue());
         newCarValue.setPlannedEndOfLife(carValueAddUpdateDto.getPlannedEndOfLife());
         newCarValue.setPriceEndOfLife(carValueAddUpdateDto.getPriceEndOfLife());
-        carValueRepository.save(newCarValue);
+        return carValueRepository.save(newCarValue);
     }
 
-    public void updateValuesOfACar(CarValue carValue, long carId) {
+    public CarValue updateValuesOfACar(CarValue carValue, long carId) {
         CarValue carValueToUpdate = carValueRepository.findById(carId).orElse(null);
         if (carValueToUpdate != null) {
             carValueToUpdate.setEntryDate(carValue.getEntryDate());
@@ -54,7 +54,7 @@ public class CarValueService {
             carValueToUpdate.setPlannedEndOfLife(carValue.getPlannedEndOfLife());
             carValueToUpdate.setPriceEndOfLife(carValue.getPriceEndOfLife());
         }
-        carValueRepository.save(carValueToUpdate);
+        return carValueRepository.save(carValueToUpdate);
     }
 
     public void deleteValuesOfACar(long carId) {

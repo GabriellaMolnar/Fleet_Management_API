@@ -10,13 +10,11 @@ import org.springframework.http.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class CarTest {
     @Autowired
     private TestRestTemplate restTemplate;
     private final String url = "http://localhost:8080/cars";
-
 
     private void postCar(CarAddUpdateDto newCar) {
         final HttpEntity<CarAddUpdateDto> httpEntity = createHttpEntityWithMediatypeJson(newCar);
@@ -51,7 +49,6 @@ public class CarTest {
         assertEquals(4, cars3.length);
     }
 
-
     @Test
     public void addNotValidCarTest() {
         CarAddUpdateDto badCar = new CarAddUpdateDto("GE", Brand.JAGUAR, "4444", "brown", "vvvvvvvvv", true);
@@ -78,7 +75,7 @@ public class CarTest {
     }
 
     @Test
-    public void getACarTestByRegistraionNumberPUS111() {
+    public void getACarTestByRegistrationNumberPUS111() {
         final ResponseEntity<CarTestDto> response = restTemplate.getForEntity(url + "/reg_num?registration_number=PUS-111", CarTestDto.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         final CarTestDto receivedCar = response.getBody();
@@ -122,5 +119,4 @@ public class CarTest {
         assert cars != null;
         assertEquals(2, cars.length);
     }
-
 }

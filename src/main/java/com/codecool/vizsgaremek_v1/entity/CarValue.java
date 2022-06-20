@@ -36,4 +36,8 @@ public class CarValue {
     @JsonIdentityReference(alwaysAsId = true)
     @JoinColumn(name = "car_id", referencedColumnName = "id")
     private Car car;
+
+    public CarValue(long carId) {
+        this.carId = carId;
+    }
 }
