@@ -1,6 +1,8 @@
 package com.codecool.vizsgaremek_v1.entity.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
@@ -10,6 +12,8 @@ import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class DriverAddUpdateDto {
 
     @NotNull
