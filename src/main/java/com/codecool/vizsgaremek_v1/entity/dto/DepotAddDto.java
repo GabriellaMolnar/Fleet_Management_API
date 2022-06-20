@@ -1,11 +1,15 @@
 package com.codecool.vizsgaremek_v1.entity.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class DepotAddDto {
     @NotBlank(message = "Depot name required")
     private String depotName;
