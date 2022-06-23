@@ -26,7 +26,7 @@ public class Driver {
     private LocalDate birthDate;
     private String motherName;
 
-    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "driver")
     @JsonIdentityReference(alwaysAsId = true)
     private List<Car> cars = new ArrayList<>();
 }

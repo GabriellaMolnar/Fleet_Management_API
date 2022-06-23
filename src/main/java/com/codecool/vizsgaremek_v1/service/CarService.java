@@ -1,9 +1,9 @@
 package com.codecool.vizsgaremek_v1.service;
 
-import com.codecool.vizsgaremek_v1.entity.Brand;
-import com.codecool.vizsgaremek_v1.entity.Car;
+import com.codecool.vizsgaremek_v1.entity.*;
 import com.codecool.vizsgaremek_v1.entity.dto.CarAddUpdateDto;
 import com.codecool.vizsgaremek_v1.repository.CarRepository;
+import com.codecool.vizsgaremek_v1.repository.CarValueRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +11,11 @@ import java.util.List;
 @Service
 public class CarService {
     private final CarRepository carRepository;
+    private final CarValueRepository carValueRepository;
 
-    public CarService(CarRepository carRepository) {
+    public CarService(CarRepository carRepository, CarValueRepository carValueRepository) {
         this.carRepository = carRepository;
+        this.carValueRepository = carValueRepository;
     }
 
     public List<Car> listCars() {
@@ -49,6 +51,12 @@ public class CarService {
     }
 
     public void deleteCar(long id) {
+        Car car = carRepository.findById(id).orElse(null);
+        car.setDriver(null);
+        car.setDepot(null);
+        if (carValueRepository.findById(id).isPresent()) {
+            carValueRepository.deleteById(carValueRepository.findById(id).get().getCarId());
+        }
         carRepository.deleteById(id);
     }
 
