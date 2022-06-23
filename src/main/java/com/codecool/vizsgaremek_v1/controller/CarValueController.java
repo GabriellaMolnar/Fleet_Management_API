@@ -45,6 +45,10 @@ public class CarValueController {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body("invalid car value");
         }
+        if (carValueService.addNewValuesToACar(carValueAddUpdateDto)==null){
+            return ResponseEntity.badRequest().body("you cannot add a value to this car, maybe this car does not exist" +
+                    " or a value has been added to the car before.");
+        }
         return ResponseEntity.ok().body(carValueService.addNewValuesToACar(carValueAddUpdateDto));
     }
 
