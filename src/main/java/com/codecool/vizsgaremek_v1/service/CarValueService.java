@@ -58,6 +58,9 @@ public class CarValueService {
     }
 
     public void deleteValuesOfACar(long carId) {
+        Car car = carRepository.findById(carId).orElse(null);
+        car.setCarValue(null);
+        carRepository.save(car);
         carValueRepository.deleteById(carId);
     }
 
