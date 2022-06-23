@@ -39,8 +39,8 @@ public class Car {
     @JsonIdentityReference(alwaysAsId = true)
     private Depot depot;
 
-    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
-    @JsonIdentityReference(alwaysAsId = true)
-    @PrimaryKeyJoinColumn
-    private CarValue carValue;
+   // @OneToOne
+   // @JsonIdentityReference(alwaysAsId = true)
+   // @PrimaryKeyJoinColumn
+  //  private CarValue carValue;
 }

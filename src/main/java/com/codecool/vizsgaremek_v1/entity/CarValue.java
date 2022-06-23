@@ -31,8 +31,9 @@ public class CarValue {
     @Transient
     private int monthlyDepr;
 
+
     @OneToOne
-    @MapsId
+    //  @MapsId
     @JsonIdentityReference(alwaysAsId = true)
     @JoinColumn(name = "car_id", referencedColumnName = "id")
     private Car car;
