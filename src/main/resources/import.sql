@@ -10,4 +10,6 @@ INSERT INTO  Car (registration_number, brand, model, color, engine_number, passe
 
 INSERT INTO car_value (car_id, entry_date, gross_value, planned_end_of_life, price_end_of_life) VALUES (1, DATE '2020-06-01', 20000000, DATE '2024-06-01', 4000000);
 INSERT INTO car_value (car_id, entry_date, gross_value, planned_end_of_life, price_end_of_life) VALUES (2, DATE '2020-01-01', 15000000, DATE '2024-01-01', 3000000);
+INSERT INTO car_value (car_id, entry_date, gross_value, planned_end_of_life, price_end_of_life) VALUES (3, DATE '2020-06-01', 20000000, DATE '2024-06-01', 4000000);
+INSERT INTO car_value (car_id, entry_date, gross_value, planned_end_of_life, price_end_of_life) VALUES (4, DATE '2020-01-01', 15000000, DATE '2024-01-01', 3000000);
 
