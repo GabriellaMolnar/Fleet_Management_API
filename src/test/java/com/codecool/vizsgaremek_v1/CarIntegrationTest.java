@@ -11,7 +11,7 @@ import org.springframework.http.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class CarTest {
+public class CarIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
     private final String url = "http://localhost:8080/cars";

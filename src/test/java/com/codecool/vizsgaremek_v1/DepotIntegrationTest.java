@@ -10,7 +10,7 @@ import org.springframework.http.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class DepotTest {
+public class DepotIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
     private final String url = "http://localhost:8080/depots";

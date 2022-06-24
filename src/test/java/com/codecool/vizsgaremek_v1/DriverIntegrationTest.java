@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class DriverTest {
+public class DriverIntegrationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
