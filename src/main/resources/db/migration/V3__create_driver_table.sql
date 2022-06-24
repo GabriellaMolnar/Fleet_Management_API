@@ -1,2 +1,2 @@
-create table driver (tribe_number int8 not null, birth_date date, mother_name varchar(50), name varchar(50), primary key (tribe_number));
-alter table if exists car add constraint FKneb2rqyivfghtm8anaag53k20 foreign key (driver_tribe_number) references driver;
+create table driver (tribe_number int8 not null, birth_date date, mother_name varchar(255), name varchar(255), primary key (tribe_number));
+alter table if exists car add constraint FKneb2rqyivfghtm8anaag53k20 foreign key (driver_tribe_number) references driver
