@@ -57,7 +57,7 @@ public class DepotTest {
         assert receivedDepot != null;
         assertEquals(1, receivedDepot.getId());
         assertEquals("Our main depot", receivedDepot.getDepotName());
-        assertEquals("Kiskunfélegyháza Fő utca 2.", receivedDepot.getAddress());
+        assertEquals("Kiskunfélegyháza, Fő utca 2.", receivedDepot.getAddress());
     }
 
     @Test

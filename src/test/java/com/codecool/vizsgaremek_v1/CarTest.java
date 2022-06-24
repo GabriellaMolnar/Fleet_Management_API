@@ -34,19 +34,19 @@ public class CarTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         final CarTestDto[] cars = response.getBody();
         assert cars != null;
-        assertEquals(4, cars.length);
+        assertEquals(5, cars.length);
 
         CarAddUpdateDto newCar = new CarAddUpdateDto("RIT-789", Brand.ALFA_ROMEO, "Civic", "pink", "ggggggggggggg", true);
         postCar(newCar);
         final ResponseEntity<CarTestDto[]> postResponse = restTemplate.getForEntity(url, CarTestDto[].class);
         assertEquals(HttpStatus.OK, postResponse.getStatusCode());
-        assertEquals(5, postResponse.getBody().length);
+        assertEquals(6, postResponse.getBody().length);
 
         restTemplate.delete(url + "/" + 5, CarTestDto.class);
         final ResponseEntity<CarTestDto[]> responseAfterDelete = restTemplate.getForEntity(url, CarTestDto[].class);
         final CarTestDto[] cars3 = responseAfterDelete.getBody();
         assertEquals(HttpStatus.OK, responseAfterDelete.getStatusCode());
-        assertEquals(4, cars3.length);
+        assertEquals(5, cars3.length);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class CarTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         final CarTestDto[] cars = response.getBody();
         assert cars != null;
-        assertEquals(3, cars.length);
+        assertEquals(4, cars.length);
     }
 
     @Test
@@ -117,6 +117,6 @@ public class CarTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         final CarTestDto[] cars = response.getBody();
         assert cars != null;
-        assertEquals(2, cars.length);
+        assertEquals(3, cars.length);
     }
 }
