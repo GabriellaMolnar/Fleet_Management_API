@@ -1,0 +1,2 @@
+sudo docker build . -t fleetapp
+sudo docker run --rm -it --name fleetcontainer --network=fleetnet -e SPRING_DATASOURCE_USERNAME=fleetmanager -e SPRING_DATASOURCE_PASSWORD=fleetmanager -e SPRING_DATASOURCE_URL=jdbc:postgresql://fleetdb:5432/fleet -p 8080:8080 fleetapp
