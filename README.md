@@ -8,7 +8,7 @@ to demonstrate the knowledge required to complete the junior enterprise backend 
 #### This application allows the user to manage the organisation's vehicle fleet, assign cars to drivers and locations, 
 #### and calculate the current value of vehicles.
 
-Data stored in an PostgreSQL database.
+Data stored in a PostgreSQL database.
 
 ### Entities:   
 - car
@@ -25,7 +25,14 @@ Swagger API documentation in JSON can be found at http://localhost:8080/api-docs
 - docker
 - docker compose
 ### Customize environment variables
-"PASSWORD=fleetmanager"
+
+SPRING_DATASOURCE_USERNAME=fleetmanager
+
+SPRING_DATASOURCE_USERNAME=fleetmanager
+
+SPRING_DATASOURCE_URL=jdbc:postgresql://fleetdb:5432/fleet
+
 ### You can run the API by using these commands:
-- sudo sh startapplication1.sh 
-- sudo sh startapplication2.sh 
+- sudo sh start_application_1_fleetnet.sh
+- sudo sh start_application_2_fleetdb.sh
+- sudo sh start_application_3_fleetapp.sh
