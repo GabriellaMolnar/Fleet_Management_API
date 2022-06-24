@@ -6,12 +6,15 @@ import com.codecool.vizsgaremek_v1.entity.Car;
 import com.codecool.vizsgaremek_v1.service.CarService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -38,7 +41,7 @@ public class CarUnitTest {
         car1.setEngineNumber("asdfghjkl13546");
         car1.setPassengerCar(true);
 
-        car2.setId(1L);
+        car2.setId(2L);
         car2.setRegistrationNumber("REW-951");
         car2.setBrand(Brand.VOLKSWAGEN);
         car2.setModel("Passat");
@@ -48,11 +51,34 @@ public class CarUnitTest {
     }
 
     @Test
-    public void testFindAll(){
+    public void testFindAll() {
         when(carService.listCars()).thenReturn(List.of(car1, car2));
         List<Car> result = carController.listCars();
         assertEquals(result, carController.listCars());
         assertEquals(car1.getId(), result.get(0).getId());
         assertEquals(car1.getRegistrationNumber(), result.get(0).getRegistrationNumber());
+        assertEquals(car2.getBrand(), result.get(1).getBrand());
+        assertEquals(car2.getColor(), result.get(1).getColor());
+    }
+
+    @Test
+    public void testFindById() {
+        when(carService.getCar(2L)).thenReturn(car2);
+        Car result = carController.getCar(2L);
+        assertEquals(result, car2);
+    }
+
+    @Test
+    public void testGetPassengerCars() {
+        when(carService.getPassengerCars()).thenReturn(List.of(car1, car2));
+        List<Car> result = carController.getPassengerCars();
+        assertEquals(result, List.of(car1, car2));
+    }
+
+    @Test
+    public void testGetCommercialVehicles() {
+        when(carService.getCommercialVehicles()).thenReturn(new ArrayList<>());
+        List<Car> result = carController.getCommercialVehicles();
+        assertEquals(result, new ArrayList<>());
     }
 }

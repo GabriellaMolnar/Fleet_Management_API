@@ -1,6 +1,5 @@
 package com.codecool.vizsgaremek_v1;
 
-import com.codecool.vizsgaremek_v1.entity.CarValue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,33 +21,24 @@ public class CarValueIntegrationTest {
 
     @Test
     public void CarValueListTest() {
-        final ResponseEntity<CarValue[]> response = restTemplate.getForEntity(url, CarValue[].class);
+        final ResponseEntity<CarValueTestDto[]> response = restTemplate.getForEntity(url, CarValueTestDto[].class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        final CarValue[] carValues = response.getBody();
+        final CarValueTestDto[] carValues = response.getBody();
         assert carValues != null;
-        assertEquals(2, carValues.length);
+        assertEquals(4, carValues.length);
     }
 
     @Test
     public void getACarValueTest() {
-        final ResponseEntity<CarValue> response = restTemplate.getForEntity(url + "/" + 1, CarValue.class);
+        final ResponseEntity<CarValueTestDto> response = restTemplate.getForEntity(url + "/" + 1, CarValueTestDto.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        final CarValue receivedCarValue = response.getBody();
+        final CarValueTestDto receivedCarValue = response.getBody();
         assert receivedCarValue != null;
         assertEquals(1, receivedCarValue.getCarId());
-        assertEquals(9000000, receivedCarValue.getGrossValue());
+        assertEquals(20000000, receivedCarValue.getGrossValue());
         assertEquals(LocalDate.of(2020, 6, 1), receivedCarValue.getEntryDate());
         assertEquals(LocalDate.of(2024, 6, 1), receivedCarValue.getPlannedEndOfLife());
-        assertEquals(3000000, receivedCarValue.getPriceEndOfLife());
+        assertEquals(4000000, receivedCarValue.getPriceEndOfLife());
     }
 
-    @Test
-    public void getNetValues() {
-        //TODO
-        final ResponseEntity<Integer[]> response = restTemplate.getForEntity(url + "/net_value", Integer[].class);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        final Integer[] carNetValues = response.getBody();
-        assert carNetValues != null;
-        assertEquals(2, carNetValues.length);
-    }
 }
