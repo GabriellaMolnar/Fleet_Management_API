@@ -1,0 +1,1247 @@
+{
+	"info": {
+		"_postman_id": "b12f93f1-3e20-46e7-8296-922c30e83153",
+		"name": "FleetManagement",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19640728"
+	},
+	"item": [
+		{
+			"name": "Car",
+			"item": [
+				{
+					"name": "get cars",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"cars_length\", jsonData.length);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cars",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add a car",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"car_id\",jsonData[\"id\"]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n        \"registrationNumber\": \"PAT-333\",\n        \"brand\": \"CADILLAC\",\n        \"model\": \"CT4\",\n        \"color\": \"red\",\n        \"engineNumber\": \"ertzuigdsfhléajhés\",\n        \"passengerCar\": true\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cars",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a car",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cars/{{car_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars",
+								"{{car_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get cars 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"cars length after Post is increased\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var previousCarsLength = pm.collectionVariables.get(\"cars_length\");",
+									"    pm.expect(jsonData.length).to.eql(previousCarsLength+1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cars",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a car",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"registration_number\",jsonData[\"registrationNumber\"]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n        \"registrationNumber\": \"SAT-888\",\n        \"brand\": \"CADILLAC\",\n        \"model\": \"CT4\",\n        \"color\": \"red\",\n        \"engineNumber\": \"ertzuigdsfhléajhés\",\n        \"passengerCar\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cars/{{car_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars",
+								"{{car_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a car by registration number",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cars/reg_num?registration_number={{registration_number}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars",
+								"reg_num"
+							],
+							"query": [
+								{
+									"key": "registration_number",
+									"value": "{{registration_number}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete car",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cars/{{car_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars",
+								"{{car_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get cars 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"cars length after Delete is decreased\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var originalCarLength = pm.collectionVariables.get(\"cars_length\");",
+									"    pm.expect(jsonData.length).to.eql(originalCarLength);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cars",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a car by brand",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cars/brand?brand=HONDA",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars",
+								"brand"
+							],
+							"query": [
+								{
+									"key": "brand",
+									"value": "HONDA"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get passenger cars",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cars/passenger_cars",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars",
+								"passenger_cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get free cars",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cars/free",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars",
+								"free"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get commercial vehicles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cars/commercial_vehicles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars",
+								"commercial_vehicles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Driver",
+			"item": [
+				{
+					"name": "get drivers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"drivers_length\", jsonData.length);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/drivers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"drivers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add a driver",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"tribe_number\",jsonData[\"tribeNumber\"]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tribeNumber\": 333333,\n    \"name\": \"Remete Elek\",\n    \"birthDate\": \"1966-01-12\",\n    \"motherName\": \"Remek Elek\",\n    \"cars\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/drivers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"drivers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get drivers 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"drivers length after Post is increased\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var previousCarsLength = pm.collectionVariables.get(\"drivers_length\");",
+									"    pm.expect(jsonData.length).to.eql(previousCarsLength+1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/drivers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"drivers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a driver",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/drivers/{{tribe_number}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"drivers",
+								"{{tribe_number}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update driver",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"driver_name\",jsonData[\"name\"]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tribeNumber\": 333333,\n    \"name\": \"Remete Ramóna\",\n    \"birthDate\": \"1966-01-12\",\n    \"motherName\": \"Remek Elek\",\n    \"cars\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/drivers/333333",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"drivers",
+								"333333"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get driver by name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/drivers/name?name={{driver_name}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"drivers",
+								"name"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{{driver_name}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete driver",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/drivers/{{tribe_number}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"drivers",
+								"{{tribe_number}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get drivers 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"cars length after Delete is decreased\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var originalDriversLength = pm.collectionVariables.get(\"drivers_length\");",
+									"    pm.expect(jsonData.length).to.eql(originalDriversLength);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/drivers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"drivers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CarValue",
+			"item": [
+				{
+					"name": "get car values",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"values_length\", jsonData.length);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/values",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"values"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add a car value",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"carId\": 5,\n        \"entryDate\": \"2021-01-01\",\n        \"grossValue\": 21000000,\n        \"plannedEndOfLife\": \"2025-01-01\",\n        \"priceEndOfLife\": 5000000\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/values",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"values"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a car value",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/values/5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"values",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update value",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"carId\": 3,\n        \"entryDate\": \"2023-01-01\",\n        \"grossValue\": 4000000,\n        \"plannedEndOfLife\": \"2025-01-01\",\n        \"priceEndOfLife\": 3000000\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/values/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"values",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete value",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/values/5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"values",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get net values",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/values/net_value",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"values",
+								"net_value"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get depr",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/values/depr",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"values",
+								"depr"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Depot",
+			"item": [
+				{
+					"name": "get depots",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"depots_length\", jsonData.length);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/depots",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"depots"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add a depot",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"depot_id\",jsonData[\"id\"]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"depotName\": \"Kecskemet depot\",\n    \"address\": \"Kecskemet Szabadság utca 3. \"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/depots",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"depots"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a depot",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/depots/{{depot_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"depots",
+								"{{depot_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get depots 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"depots length after Add is increased\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var originalLength = pm.collectionVariables.get(\"depots_length\");",
+									"    pm.expect(jsonData.length).to.eql(originalLength+1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/depots",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"depots"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a depot",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/depots/{{depot_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"depots",
+								"{{depot_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get depots 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"depots length after Delete is decreased\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var originalLength = pm.collectionVariables.get(\"depots_length\");",
+									"    pm.expect(jsonData.length).to.eql(originalLength);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/depots",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"depots"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "cars_length",
+			"value": ""
+		},
+		{
+			"key": "car_id",
+			"value": ""
+		},
+		{
+			"key": "registration_number",
+			"value": ""
+		},
+		{
+			"key": "driver_name",
+			"value": ""
+		},
+		{
+			"key": "tribe_number",
+			"value": ""
+		},
+		{
+			"key": "drivers_length",
+			"value": ""
+		},
+		{
+			"key": "depot_id",
+			"value": ""
+		},
+		{
+			"key": "depots_length",
+			"value": ""
+		},
+		{
+			"key": "values_length",
+			"value": ""
+		}
+	]
+}
