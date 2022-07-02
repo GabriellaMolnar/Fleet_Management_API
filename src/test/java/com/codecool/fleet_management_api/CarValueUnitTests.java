@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = CarValueController.class)
-public class CarValueUnitTest {
+public class CarValueUnitTests {
 
     @MockBean
     private CarValueService carValueService;
