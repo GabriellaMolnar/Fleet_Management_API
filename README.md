@@ -38,5 +38,10 @@ SPRING_DATASOURCE_URL=jdbc:postgresql://fleetdb:5432/fleet
 - sudo sh start_application_3_fleetapp.sh
 
 ### Run Postman tests from command line to all endpoints:
-First you need Newman. Install Newman: npm install -g newman
-Run from command line from main directory: newman run FleetManagement.postman_collection.json 
+First you need Newman. Install Newman: 
+
+npm install -g newman
+
+Run from command line from main directory: 
+
+newman run FleetManagement.postman_collection.json 
