@@ -21,7 +21,7 @@ Interactive Swagger API documentation with UI can be found at http://localhost:8
 
 Swagger API documentation in JSON can be found at http://localhost:8080/api-docs
 
-### Installation equirements:
+### Installation requirements:
 - docker
 - docker compose
 ### Customize environment variables
@@ -36,3 +36,7 @@ SPRING_DATASOURCE_URL=jdbc:postgresql://fleetdb:5432/fleet
 - sudo sh start_application_1_fleetnet.sh
 - sudo sh start_application_2_fleetdb.sh
 - sudo sh start_application_3_fleetapp.sh
+
+### Run Postman tests from command line to all endpoints:
+First you need Newman. Install Newman: npm install -g newman
+Run from command line from main directory: newman run FleetManagement.postman_collection.json 
