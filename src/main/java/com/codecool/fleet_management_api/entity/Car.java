@@ -38,9 +38,4 @@ public class Car {
     @JoinColumn(name = "depot_id", referencedColumnName = "id")
     @JsonIdentityReference(alwaysAsId = true)
     private Depot depot;
-
-   // @OneToOne
-   // @JsonIdentityReference(alwaysAsId = true)
-   // @PrimaryKeyJoinColumn
-  //  private CarValue carValue;
 }

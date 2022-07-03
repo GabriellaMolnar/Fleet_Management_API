@@ -7,6 +7,10 @@ import com.codecool.fleet_management_api.service.CarService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +46,10 @@ public class CarController {
     @PostMapping
     @Operation(summary = "Add a car",
             description = "Add an new car to your car list")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CarAddUpdateDto.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)})
     public ResponseEntity<?> addCar(@Valid @RequestBody CarAddUpdateDto carDto, BindingResult bindingResult) {
         ResponseEntity<?> error_message = getResponseEntity(bindingResult);
         if (error_message != null) return error_message;
