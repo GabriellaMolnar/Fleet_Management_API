@@ -23,7 +23,6 @@ Data stored in a PostgreSQL database.
 ### Installation requirements:
 - docker
 - docker compose
-- flyway
 
 ### Customize environment variables
 
@@ -38,6 +37,8 @@ SPRING_DATASOURCE_URL=jdbc:postgresql://fleetdb:5432/fleet
 - sudo sh start_application_2_fleetdb.sh
 - sudo sh start_application_3_fleetapp.sh
 
+Stop API:
+- sudo sh stop_application.sh
 
 ### API docs
 Interactive Swagger API documentation with UI can be found at http://localhost:8080/swagger-ui.html
